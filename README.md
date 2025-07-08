@@ -35,69 +35,30 @@ psql telemetry_test -c "GRANT CREATE ON SCHEMA public TO testuser;"
 ### 2. Main API Server
 
 ```bash
-mkdir telemetry-test-main-api
-cd telemetry-test-main-api
-npm init -y
-npm install express cors pg axios
-npm install --save-dev nodemon
-
-# Copy the files: index.js, routes.js, controllers.js, middlewares.js, utilities.js
-# Update package.json with the provided configuration
-
+npm install
 npm run dev
 ```
 
 ### 3. External Service
 
 ```bash
-mkdir telemetry-test-external-service
-cd telemetry-test-external-service
-npm init -y
-npm install express cors
-npm install --save-dev nodemon
-
-# Copy the external service index.js file
-# Update package.json with the provided configuration
-
+npm install
 npm run dev
 ```
 
 ### 4. Internal Service
 
 ```bash
-mkdir telemetry-test-internal-service
-cd telemetry-test-internal-service
-npm init -y
-npm install express cors
-npm install --save-dev nodemon
-
-# Copy the internal service index.js file
-# Update package.json with the provided configuration
-
+npm install
 npm run dev
 ```
 
 ### 5. Frontend
 
 ```bash
-npm create vite@latest telemetry-test-frontend -- --template react
-cd telemetry-test-frontend
 npm install
-npm install lucide-react
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
-
-# Copy the App.jsx file
-# Update package.json with the provided configuration
-
-# Configure Tailwind CSS in tailwind.config.js:
-# content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"]
-
-# Add Tailwind directives to src/index.css:
-# @tailwind base;
-# @tailwind components;
-# @tailwind utilities;
-
 npm run dev
 ```
 

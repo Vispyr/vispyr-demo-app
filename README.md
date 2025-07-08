@@ -23,25 +23,13 @@ A comprehensive full-stack application designed for testing observability data i
 ```bash
 # Create database and user
 createdb telemetry_test
+
 psql telemetry_test -c "CREATE USER testuser WITH PASSWORD 'testpass';"
 psql telemetry_test -c "GRANT ALL PRIVILEGES ON DATABASE telemetry_test TO testuser;"
-```
-
-For additional permissions:
-
-```bash
--- Let the user access the schema
-GRANT USAGE ON SCHEMA public TO testuser;
-
--- Allow access to all current tables
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO testuser;
-
--- Ensure future tables are accessible too
-ALTER DEFAULT PRIVILEGES IN SCHEMA public
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO testuser;
-
--- Ensure users can create tables
-GRANT CREATE ON SCHEMA public TO testuser;
+psql telemetry_test -c "GRANT USAGE ON SCHEMA public TO testuser;"
+psql telemetry_test -c "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO testuser;"
+psql telemetry_test -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO testuser;"
+psql telemetry_test -c "GRANT CREATE ON SCHEMA public TO testuser;"
 ```
 
 ### 2. Main API Server
@@ -233,4 +221,77 @@ npm run dev
 ## Notes
 
 - The application is designed to be instrumented with your preferred observability tools
-- All endpoints
+- All endpoints include proper error handling and logging points
+- The database will be automatically initialized with test data on first run
+- Functions are designed to stress-test different aspects of your observability stack without crashing the application
+- Memory and CPU intensive operations are bounded to prevent system crashes
+
+## Troubleshooting
+
+### Database Connection Issues
+- Ensure PostgreSQL is running and accessible
+- Verify database credentials in .env file
+- Check if the database and user exist
+
+### Port Conflicts
+- Verify no other services are running on ports 3000-3003
+- Update port configurations in .env files if needed
+
+### High Memory Usage
+- The heap-break function intentionally uses significant memory
+- Monitor system resources during testing
+- Adjust array sizes in utilities.js if needed
+
+### Stack Overflow Protection
+- Stack-breaking functions are limited to prevent crashes
+- Recursive functions have built-in depth limits
+- Adjust limits in utilities.js based on your system capabilities
+
+## Performance Expectations
+
+- **Efficient Sort**: < 5ms for 100 elements
+- **Slow Sort**: 50-100ms for 100 elements
+- **Long Function**: Exactly 60 seconds
+- **Database Query**: 10-50ms depending on system
+- **Network Latency**: 500-2500ms simulated delay
+- **CPU Intensive**: 10 seconds of computation
+- **High Traffic**: 100 requests in 2-3 seconds
+
+## Customization
+
+### Adjusting Test Parameters
+Edit `utilities.js` in the main API server to modify:
+- Array sizes for sorting algorithms
+- Duration of long-running functions
+- Memory allocation amounts
+- Stack depth limits
+- Retry counts and delays
+
+### Adding New Test Scenarios
+1. Add new utility functions to `utilities.js`
+2. Create corresponding controllers in `controllers.js`
+3. Add routes to `routes.js`
+4. Update the frontend with new buttons in `App.jsx`
+
+### Database Schema
+The application creates a simple test table:
+```sql
+CREATE TABLE IF NOT EXISTS test_data (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    value INTEGER,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+## Security Considerations
+
+- This application is designed for testing environments only
+- No authentication or authorization is implemented
+- Database credentials are stored in plain text
+- Do not use in production environments
+- All endpoints are publicly accessible
+
+## License
+
+This project is intended for testing and educational purposes. Use at your own risk.

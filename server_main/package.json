@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon --require ./instrumentation.js src/index.js",
+    "dev": "nodemon --require ./profileService.js --require ./instrumentation.js src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@opentelemetry/auto-instrumentations-node": "^0.61.0",
+    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.202.0",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.202.0",
+    "@opentelemetry/sdk-node": "^0.202.0",
     "@pyroscope/nodejs": "^0.4.5",
     "axios": "^1.6.2",
     "cors": "^2.8.5",

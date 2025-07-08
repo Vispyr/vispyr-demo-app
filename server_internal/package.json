@@ -1,0 +1,25 @@
+{
+  "name": "telemetry-test-internal-service",
+  "version": "1.0.0",
+  "description": "Internal service for telemetry testing",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "telemetry",
+    "internal-service",
+    "testing"
+  ],
+  "author": "",
+  "license": "MIT"
+}

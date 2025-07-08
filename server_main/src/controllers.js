@@ -30,6 +30,7 @@ const efficientSort = async (req, res) => {
       message: 'Efficient sort completed successfully',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -48,6 +49,7 @@ const slowSort = async (req, res) => {
       message: 'Slow sort completed successfully',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -64,6 +66,7 @@ const longFunction = async (req, res) => {
       message: 'Long function completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -81,6 +84,7 @@ const heapBreak = async (req, res) => {
       message: 'Heap stress test completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -98,6 +102,7 @@ const stackBreak = async (req, res) => {
       message: 'Stack stress test completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -115,6 +120,7 @@ const recursiveFunction = async (req, res) => {
       message: 'Recursive function completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -132,6 +138,7 @@ const cpuIntensiveTask = async (req, res) => {
       message: 'CPU intensive task completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -174,6 +181,7 @@ const queryDatabase = async (req, res) => {
       message: 'Database query completed successfully',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -245,6 +253,7 @@ const internalServiceCall = async (req, res) => {
       message: 'Internal service call completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -267,6 +276,7 @@ const networkLatencyTest = async (req, res) => {
       message: 'Network latency test completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -286,6 +296,7 @@ const simulateTraffic = async (req, res) => {
       message: 'Traffic simulation completed successfully',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: error.message });
   }
 };

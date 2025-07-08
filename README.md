@@ -27,6 +27,23 @@ psql telemetry_test -c "CREATE USER testuser WITH PASSWORD 'testpass';"
 psql telemetry_test -c "GRANT ALL PRIVILEGES ON DATABASE telemetry_test TO testuser;"
 ```
 
+For additional permissions:
+
+```bash
+-- Let the user access the schema
+GRANT USAGE ON SCHEMA public TO testuser;
+
+-- Allow access to all current tables
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO testuser;
+
+-- Ensure future tables are accessible too
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO testuser;
+
+-- Ensure users can create tables
+GRANT CREATE ON SCHEMA public TO testuser;
+```
+
 ### 2. Main API Server
 
 ```bash

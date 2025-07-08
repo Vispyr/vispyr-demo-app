@@ -155,19 +155,19 @@ PORT=3003
 
 ```bash
 # Terminal 1 - Main API
-cd telemetry-test-main-api
+cd server_main
 npm run dev
 
 # Terminal 2 - External Service
-cd telemetry-test-external-service
+cd server_external
 npm run dev
 
 # Terminal 3 - Internal Service
-cd telemetry-test-internal-service
+cd server_internal
 npm run dev
 
 # Terminal 4 - Frontend
-cd telemetry-test-frontend
+cd client
 npm run dev
 ```
 

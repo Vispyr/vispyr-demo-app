@@ -110,7 +110,7 @@ const stackBreak = async (req, res) => {
 const recursiveFunction = async (req, res) => {
   try {
     const startTime = Date.now();
-    const result = deepRecursion(7); // 7 levels deep
+    const result = deepRecursion(10); // 7 levels deep
     const endTime = Date.now();
 
     res.json({

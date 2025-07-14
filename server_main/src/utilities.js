@@ -2,7 +2,7 @@ const axios = require('axios');
 
 // Generate test array for sorting
 const generateTestArray = (size = 100) => {
-  return Array.from({ length: size }, () => Math.floor(Math.random() * 1000));
+  return Array.from({ length: size }, () => Math.floor(Math.random() * 100000));
 };
 
 // Efficient sorting - QuickSort
@@ -120,7 +120,7 @@ const createHeapStress = () => {
 
 // Stack stress test (controlled depth)
 const createStackOverflow = () => {
-  const maxDepth = 10000; // Reasonable depth that won't crash
+  const maxDepth = 1000000; // Reasonable depth that won't crash
   let currentDepth = 0;
 
   const recursiveFunction = (depth) => {
@@ -187,12 +187,12 @@ const cpuBoundTask = () => {
 // Simulate high traffic
 const simulateHighTraffic = async () => {
   const requests = [];
-  const requestCount = 100;
+  const requestCount = 10000;
   const baseUrl = 'http://localhost:3001';
 
   const startTime = Date.now();
 
-  // Create 100 concurrent requests
+  // Create 10000 concurrent requests
   for (let i = 0; i < requestCount; i++) {
     const requestPromise = axios
       .get(`${baseUrl}/health`, {

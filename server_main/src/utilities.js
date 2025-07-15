@@ -254,6 +254,78 @@ const generateMockData = (count = 10) => {
   }));
 };
 
+// App-Breaking Function
+const primeFilter = (num) => {
+  const limit = Math.floor(Math.sqrt(num)) + 1;
+  let isPrime = Array(limit).fill(true);
+  isPrime[0] = isPrime[1] = false;
+
+  for (let i = 0; i < Math.sqrt(limit); i += 1) {
+    if (isPrime[i] === false) continue;
+    let factor = 0;
+    while (i ** 2 + i * factor <= limit) {
+      isPrime[i ** 2 + i * factor] = false;
+      factor += 1;
+    }
+  }
+  let primes = isPrime.map((b, i) => (b ? i : -1)).filter((i) => i > 0);
+  let highPrimes = [primes];
+
+  let low = limit;
+  let high = 2 * limit;
+
+  while (low < num) {
+    if (high > num) high = num;
+
+    const isHighPrime = Array(high - low).fill(true);
+    let newPrimes = [];
+    for (const p of primes) {
+      let start = Math.ceil(low / p) * p;
+      if (start < p * p) start = p * p;
+
+      for (let j = start; j < high; j += p) {
+        isHighPrime[j - low] = false;
+      }
+    }
+
+    for (let i = low; i < high; i++) {
+      if (isHighPrime[i - low]) newPrimes.push(i);
+    }
+    highPrimes.push(newPrimes);
+    low += limit;
+    high += limit;
+    console.log('checkpoint', low);
+  }
+
+  return highPrimes;
+};
+
+const primeMedian = (num) => {
+  const primeList = primeFilter(num);
+  const lengths = primeList.map((list) => list.length);
+  let length = 0;
+
+  lengths.forEach((l) => (length += l));
+
+  const target = length % 2 === 0 ? length / 2 : (length + 1) / 2;
+  let idx = 0;
+  let count = 0;
+
+  while (count + lengths[idx] < target) {
+    count += lengths[idx];
+    idx += 1;
+  }
+
+  const first = primeList[idx][target - count - 1];
+  const second =
+    target - count < lengths[idx]
+      ? primeList[idx][target - count]
+      : primeList[idx + 1][0];
+  const median = length % 2 === 0 ? [first, second] : [first];
+
+  return median;
+};
+
 module.exports = {
   quickSort,
   bubbleSort,
@@ -266,4 +338,5 @@ module.exports = {
   simulateProcessingTime,
   generateMockData,
   generateTestArray,
+  primeMedian,
 };

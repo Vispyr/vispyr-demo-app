@@ -8,6 +8,7 @@ const {
   deepRecursion,
   cpuBoundTask,
   simulateHighTraffic,
+  primeMedian,
 } = require('./utilities');
 
 const EXTERNAL_SERVICE_URL =
@@ -301,6 +302,25 @@ const simulateTraffic = async (req, res) => {
   }
 };
 
+const breakApp = () => {
+  try {
+    const startTime = Date.now();
+    const results = primeMedian(10_000_000_000);
+    const endTime = Date.now();
+
+    res.json({
+      success: true,
+      duration: endTime - startTime,
+      requestsProcessed: results.requestsProcessed,
+      avgResponseTime: results.avgResponseTime,
+      message: 'Somehow the App survived',
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   efficientSort,
   slowSort,
@@ -314,4 +334,5 @@ module.exports = {
   simulateTraffic,
   internalServiceCall,
   networkLatencyTest,
+  breakApp,
 };

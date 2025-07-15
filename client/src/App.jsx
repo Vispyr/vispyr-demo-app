@@ -388,6 +388,19 @@ const App = () => {
                   <ResultMessage result={results.simulateTraffic} />
                 </div>
 
+                <div>
+                  <TestButton
+                    onClick={() =>
+                      handleApiCall('/break-app', 'breakApp', 'Break App')
+                    }
+                    loading={loading.breakApp}
+                    icon={Network}
+                  >
+                    Break Application
+                  </TestButton>
+                  <ResultMessage result={results.breakApp} />
+                </div>
+
                 <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
                   <p className="font-medium mb-2">Additional Metrics Tests:</p>
                   <ul className="space-y-1">

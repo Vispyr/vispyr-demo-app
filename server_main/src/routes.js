@@ -13,6 +13,7 @@ const {
   simulateTraffic,
   internalServiceCall,
   networkLatencyTest,
+  breakApp,
 } = require('./controllers');
 
 // Profile Testing Routes
@@ -32,6 +33,9 @@ router.get('/trace/network-latency', networkLatencyTest);
 
 // Metrics Testing Routes
 router.get('/metrics/simulate-traffic', simulateTraffic);
+
+// App Breaking Routes
+router.get('/break-app', breakApp);
 
 // Complex endpoint that combines multiple operations
 router.get('/complex-operation', async (req, res) => {

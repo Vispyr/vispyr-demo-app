@@ -4,11 +4,12 @@
   "description": "Internal service for telemetry testing",
   "main": "index.js",
   "scripts": {
-    "start": "node --require ./profileService.js --require ./instrumentation.js src/index.js",
-    "dev": "nodemon --require ./profileService.js --require ./instrumentation.js src/index.js",
+    "start": "node --require ./profileService.js --require ./instrumentation.js index.js",
+    "dev": "nodemon --require ./profileService.js --require ./instrumentation.js index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@opentelemetry/auto-instrumentations-node": "^0.62.0",
     "@opentelemetry/host-metrics": "^0.36.0",
     "@opentelemetry/sdk-node": "^0.203.0",
     "@pyroscope/nodejs": "^0.4.5",

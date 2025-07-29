@@ -1,5 +1,6 @@
 // NODE SDK APPROACH
 
+require('dotenv').config();
 const opentelemetry = require("@opentelemetry/sdk-node");
 const {
   getNodeAutoInstrumentations,

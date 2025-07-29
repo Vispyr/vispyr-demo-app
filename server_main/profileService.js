@@ -1,7 +1,7 @@
 const Pyroscope = require("@pyroscope/nodejs");
 
 Pyroscope.init({
-  serverAddress: "http://localhost:4040",
+  serverAddress: "http://localhost:9999",
   appName: "Telemetry-Test-App",
 });
 

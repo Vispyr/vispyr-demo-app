@@ -28,10 +28,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  width: 100%;
 }
 
 h1 {
@@ -58,15 +57,58 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+img {
+  width: 250px;
+}
+
+.bg-custom-teal-900 {
+  background-color: rgb(3, 32, 36);
+}
+
+.bg-custom-teal-700 {
+  background-color: rgb(6, 64, 72);
+}
+
+.bg-custom-teal-500 {
+  background-color: rgb(7, 80, 90);
+}
+
+.bg-custom-teal-300 {
+  background-color: rgb(14, 167, 187);
+}
+
+.border-custom-teal-500 {
+  border-color: #007070;
+}
+
+.bg-custom-teal-500:hover {
+  background-color: #008a8a;
+}
+
+.border-custom-teal-500:hover {
+  border-color: #00a3a3;
+}
+
+.bg-scarlet-red {
+  background-color: #830e25;
+}
+
+.bg-scarlet-red-hover {
+  background-color: #9d1732;
+}
+
+.border-scarlet-red {
+  border-color: #d96179;
+}
+
+.border-scarlet-red-hover {
+  border-color: #85132a;
+}
+
+.bg-scarlet-red:hover {
+  background-color: #943749;
+}
+
+.border-scarlet-red:hover {
+  border-color: #e98295;
 }

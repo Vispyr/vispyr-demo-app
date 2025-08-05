@@ -8,6 +8,7 @@ import {
   Network,
   RotateCcw,
 } from 'lucide-react';
+import vispyrLogo from './assets/vispyr-logo.png';
 
 const App = () => {
   const [results, setResults] = useState({});
@@ -56,24 +57,24 @@ const App = () => {
       <div
         className={`mt-2 p-3 rounded-md flex items-center space-x-2 ${
           result.success
-            ? 'bg-green-100 border border-green-200'
-            : 'bg-red-100 border border-red-200'
+            ? 'bg-green-900 border border-green-700'
+            : 'bg-red-900 border border-red-700'
         }`}
       >
         {result.success ? (
-          <CheckCircle className="h-4 w-4 text-green-600" />
+          <CheckCircle className="h-4 w-4 text-green-400" />
         ) : (
-          <AlertCircle className="h-4 w-4 text-red-600" />
+          <AlertCircle className="h-4 w-4 text-red-400" />
         )}
         <div className="flex-1">
           <p
             className={`text-sm font-medium ${
-              result.success ? 'text-green-800' : 'text-red-800'
+              result.success ? 'text-green-200' : 'text-red-200'
             }`}
           >
             {result.message}
           </p>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="text-xs text-gray-300 mt-1">
             {result.timestamp}
             {result.data?.duration && ` • ${result.data.duration}ms`}
           </p>
@@ -94,8 +95,8 @@ const App = () => {
       disabled={loading || disabled}
       className={`w-full p-3 rounded-md border transition-colors flex items-center space-x-2 ${
         loading || disabled
-          ? 'bg-gray-100 border-gray-300 text-gray-500 cursor-not-allowed'
-          : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
+          ? 'bg-custom-teal-700 border-teal-600 text-gray-400 cursor-not-allowed'
+          : 'bg-custom-teal-500 border-custom-teal-500 text-white hover:bg-custom-teal-600 hover:border-custom-teal-400'
       }`}
     >
       {loading ? (
@@ -108,32 +109,42 @@ const App = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen w-full bg-custom-teal-900 py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Telemetry Testing Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Test various scenarios for observability data: traces, profiles, and
-            metrics
-          </p>
-          <button
-            onClick={resetResults}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center space-x-2 mx-auto"
-          >
-            <RotateCcw className="h-4 w-4" />
-            <span>Reset All Results</span>
-          </button>
+        <div className="mb-8 relative">
+          <div className="text-center">
+            <div className="flex justify-center mb-0">
+              <img
+                src={vispyrLogo}
+                alt="Vispyr Logo"
+                className="w-80 h-80 object-contain"
+              />
+            </div>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              Demo Application
+            </h1>
+            <p className="text-gray-300">
+              Test various scenarios for observability data
+            </p>
+          </div>
+
+          <div className="absolute right-0 bottom-0">
+            <button
+              onClick={resetResults}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center space-x-2"
+            >
+              <RotateCcw className="h-4 w-4" />
+              <span>Reset All Results</span>
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Profile Scenarios */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="bg-custom-teal-700 rounded-lg shadow-sm p-6">
               <div className="flex items-center space-x-2 mb-4">
-                <Cpu className="h-5 w-5 text-purple-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <Cpu className="h-5 w-5 text-purple-400" />
+                <h2 className="text-xl font-semibold text-white">
                   Profile Scenarios
                 </h2>
               </div>
@@ -202,7 +213,7 @@ const App = () => {
                     loading={loading.heapBreak}
                     icon={Cpu}
                   >
-                    Heap Break
+                    Heap Stress
                   </TestButton>
                   <ResultMessage result={results.heapBreak} />
                 </div>
@@ -219,7 +230,7 @@ const App = () => {
                     loading={loading.stackBreak}
                     icon={Cpu}
                   >
-                    Stack Break
+                    Stack Stress
                   </TestButton>
                   <ResultMessage result={results.stackBreak} />
                 </div>
@@ -261,12 +272,11 @@ const App = () => {
             </div>
           </div>
 
-          {/* Trace Scenarios */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="bg-custom-teal-700 rounded-lg shadow-sm p-6">
               <div className="flex items-center space-x-2 mb-4">
-                <Network className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <Network className="h-5 w-5 text-blue-400" />
+                <h2 className="text-xl font-semibold text-white">
                   Trace Scenarios
                 </h2>
               </div>
@@ -360,12 +370,11 @@ const App = () => {
             </div>
           </div>
 
-          {/* Metrics Scenarios */}
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="bg-custom-teal-700 rounded-lg shadow-sm p-6">
               <div className="flex items-center space-x-2 mb-4">
-                <AlertCircle className="h-5 w-5 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <AlertCircle className="h-5 w-5 text-green-400" />
+                <h2 className="text-xl font-semibold text-white">
                   Metrics Scenarios
                 </h2>
               </div>
@@ -389,36 +398,40 @@ const App = () => {
                 </div>
 
                 <div>
-                  <TestButton
-                    onClick={() =>
-                      handleApiCall('/break-app', 'breakApp', 'Break App')
-                    }
-                    loading={loading.breakApp}
-                    icon={Network}
+                  <button
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          'Are you sure? This will crash the application!'
+                        )
+                      ) {
+                        handleApiCall('/break-app', 'breakApp', 'Break App');
+                      }
+                    }}
+                    disabled={loading.breakApp}
+                    className={`w-full p-3 rounded-md border transition-colors flex items-center space-x-2 ${
+                      loading.breakApp
+                        ? 'bg-custom-teal-700 border-teal-600 text-gray-400 cursor-not-allowed'
+                        : 'bg-scarlet-red border-scarlet-red text-white hover:bg-scarlet-red-hover hover:border-scarlet-red-hover'
+                    }`}
                   >
-                    Break Application
-                  </TestButton>
+                    {loading.breakApp ? (
+                      <Clock className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Network className="h-4 w-4" />
+                    )}
+                    <span>Break Application</span>
+                  </button>
                   <ResultMessage result={results.breakApp} />
-                </div>
-
-                <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
-                  <p className="font-medium mb-2">Additional Metrics Tests:</p>
-                  <ul className="space-y-1">
-                    <li>• CPU spikes from Profile scenarios</li>
-                    <li>• Memory usage from Heap Break</li>
-                    <li>• Request rates from Traffic simulation</li>
-                    <li>• Error rates from Retry scenarios</li>
-                  </ul>
                 </div>
               </div>
             </div>
 
-            {/* System Information */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            <div className="bg-custom-teal-700 rounded-lg shadow-sm p-6">
+              <h3 className="text-lg font-semibold text-white mb-3">
                 System Information
               </h3>
-              <div className="space-y-2 text-sm text-gray-600">
+              <div className="space-y-2 text-sm text-gray-300">
                 <div className="flex justify-between">
                   <span>Main API:</span>
                   <span className="font-mono">:3001</span>

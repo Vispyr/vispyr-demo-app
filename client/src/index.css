@@ -88,27 +88,3 @@ img {
 .border-custom-teal-500:hover {
   border-color: #00a3a3;
 }
-
-.bg-scarlet-red {
-  background-color: #830e25;
-}
-
-.bg-scarlet-red-hover {
-  background-color: #9d1732;
-}
-
-.border-scarlet-red {
-  border-color: #d96179;
-}
-
-.border-scarlet-red-hover {
-  border-color: #85132a;
-}
-
-.bg-scarlet-red:hover {
-  background-color: #943749;
-}
-
-.border-scarlet-red:hover {
-  border-color: #e98295;
-}

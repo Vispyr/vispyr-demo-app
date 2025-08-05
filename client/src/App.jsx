@@ -412,7 +412,7 @@ const App = () => {
                     className={`w-full p-3 rounded-md border transition-colors flex items-center space-x-2 ${
                       loading.breakApp
                         ? 'bg-custom-teal-700 border-teal-600 text-gray-400 cursor-not-allowed'
-                        : 'bg-scarlet-red border-scarlet-red text-white hover:bg-scarlet-red-hover hover:border-scarlet-red-hover'
+                        : 'bg-red-900 border border-red-700 text-white hover:bg-red-700 border hover:border-red-500'
                     }`}
                   >
                     {loading.breakApp ? (

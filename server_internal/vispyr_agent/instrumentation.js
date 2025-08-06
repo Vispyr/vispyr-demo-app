@@ -13,11 +13,11 @@ const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 
 const sdk = new opentelemetry.NodeSDK({
   traceExporter: new OTLPTraceExporter({
-    url: 'http://agent-collector:4317',
+    url: 'http://host.docker.internal:4317',
   }),
   metricReader: new PeriodicExportingMetricReader({
     exporter: new OTLPMetricExporter({
-      url: 'http://agent-collector:4317',
+      url: 'http://host.docker.internal:4317',
     }),
   }),
   instrumentations: [getNodeAutoInstrumentations()],

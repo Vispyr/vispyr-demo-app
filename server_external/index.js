@@ -4,17 +4,14 @@ const cors = require('cors');
 const app = express();
 const PORT = 3002;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Simple logging middleware
 app.use((req, res, next) => {
   console.log(`External Service: ${req.method} ${req.path}`);
   next();
 });
 
-// Health check
 app.get('/health', (req, res) => {
   res.json({
     service: 'external-service',
@@ -23,9 +20,8 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Simulate network delay
 app.get('/api/delay', async (req, res) => {
-  const delay = Math.floor(Math.random() * 2000) + 500; // 500-2500ms delay
+  const delay = Math.floor(Math.random() * 2000) + 500;
 
   setTimeout(() => {
     res.json({
@@ -37,9 +33,8 @@ app.get('/api/delay', async (req, res) => {
   }, delay);
 });
 
-// Unreliable endpoint that sometimes fails
 app.get('/api/unreliable', (req, res) => {
-  const shouldFail = Math.random() < 0.7; // 70% chance of failure
+  const shouldFail = Math.random() < 0.7;
 
   if (shouldFail) {
     return res.status(500).json({
@@ -60,9 +55,8 @@ app.get('/api/unreliable', (req, res) => {
   });
 });
 
-// Simulate slow external API
 app.get('/api/slow', async (req, res) => {
-  const processingTime = Math.floor(Math.random() * 3000) + 1000; // 1-4 seconds
+  const processingTime = Math.floor(Math.random() * 3000) + 1000;
 
   setTimeout(() => {
     res.json({
@@ -78,7 +72,6 @@ app.get('/api/slow', async (req, res) => {
   }, processingTime);
 });
 
-// Endpoint that returns different response codes
 app.get('/api/status/:code', (req, res) => {
   const statusCode = parseInt(req.params.code) || 200;
 
@@ -93,7 +86,6 @@ app.get('/api/status/:code', (req, res) => {
   res.status(statusCode).json(responses[statusCode] || responses[200]);
 });
 
-// Error handling
 app.use((err, req, res, next) => {
   console.error('External Service Error:', err);
   res.status(500).json({

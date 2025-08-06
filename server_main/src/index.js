@@ -23,20 +23,13 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Make pool available to routes
 app.locals.db = pool;
-
-// Routes
 app.use('/api', routes);
-
-// Error handling middleware
 app.use(errorHandler);
 
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });

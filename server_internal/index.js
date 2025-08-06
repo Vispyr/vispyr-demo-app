@@ -4,17 +4,14 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3003;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Simple logging middleware
 app.use((req, res, next) => {
   console.log(`Internal Service: ${req.method} ${req.path}`);
   next();
 });
 
-// Health check
 app.get('/health', (req, res) => {
   res.json({
     service: 'internal-service',
@@ -23,27 +20,16 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Complex processing endpoint that creates longer traces
 app.get('/api/process', async (req, res) => {
   const startTime = Date.now();
 
   try {
-    // Simulate multi-step processing
     console.log('Starting complex processing...');
 
-    // Step 1: Data validation
     await simulateStep('validation', 200, 500);
-
-    // Step 2: Data transformation
     await simulateStep('transformation', 300, 800);
-
-    // Step 3: Business logic processing
     await simulateStep('business-logic', 500, 1200);
-
-    // Step 4: Data persistence simulation
     await simulateStep('persistence', 100, 400);
-
-    // Step 5: Response preparation
     await simulateStep('response-prep', 50, 200);
 
     const endTime = Date.now();
@@ -77,7 +63,6 @@ app.get('/api/process', async (req, res) => {
   }
 });
 
-// Simulate a processing step with variable duration
 const simulateStep = async (stepName, minDuration, maxDuration) => {
   const duration =
     Math.floor(Math.random() * (maxDuration - minDuration + 1)) + minDuration;
@@ -90,12 +75,10 @@ const simulateStep = async (stepName, minDuration, maxDuration) => {
   });
 };
 
-// Endpoint that simulates database operations
 app.get('/api/database-ops', async (req, res) => {
   const startTime = Date.now();
 
   try {
-    // Simulate multiple database operations
     await simulateStep('connect-db', 50, 150);
     await simulateStep('query-users', 100, 300);
     await simulateStep('query-orders', 150, 400);
@@ -134,12 +117,10 @@ app.get('/api/database-ops', async (req, res) => {
   }
 });
 
-// Endpoint that simulates external API calls
 app.get('/api/external-calls', async (req, res) => {
   const startTime = Date.now();
 
   try {
-    // Simulate calling multiple external services
     await simulateStep('auth-service', 100, 300);
     await simulateStep('user-service', 200, 600);
     await simulateStep('notification-service', 150, 400);
@@ -169,9 +150,8 @@ app.get('/api/external-calls', async (req, res) => {
   }
 });
 
-// Endpoint that occasionally fails to test error handling
 app.get('/api/flaky', (req, res) => {
-  const shouldFail = Math.random() < 0.3; // 30% chance of failure
+  const shouldFail = Math.random() < 0.3;
 
   if (shouldFail) {
     return res.status(500).json({
@@ -192,7 +172,6 @@ app.get('/api/flaky', (req, res) => {
   });
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Internal Service Error:', err);
   res.status(500).json({

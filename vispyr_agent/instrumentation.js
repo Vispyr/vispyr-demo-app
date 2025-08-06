@@ -1,3 +1,4 @@
+require('dotenv').config();
 const opentelemetry = require('@opentelemetry/sdk-node');
 const {
   getNodeAutoInstrumentations,
@@ -11,9 +12,13 @@ const {
 const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 
 const sdk = new opentelemetry.NodeSDK({
-  traceExporter: new OTLPTraceExporter(),
+  traceExporter: new OTLPTraceExporter({
+    url: 'http://agent-collector:4317',
+  }),
   metricReader: new PeriodicExportingMetricReader({
-    exporter: new OTLPMetricExporter(),
+    exporter: new OTLPMetricExporter({
+      url: 'http://agent-collector:4317',
+    }),
   }),
   instrumentations: [getNodeAutoInstrumentations()],
 });

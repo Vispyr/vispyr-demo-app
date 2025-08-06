@@ -1,4 +1,5 @@
 services:
+  # Demo App
   postgres:
     image: postgres:15-alpine
     container_name: postgres
@@ -80,6 +81,7 @@ services:
       - demo
     restart: unless-stopped
 
+  # Agent
   node-exporter:
     image: prom/node-exporter:latest
     container_name: node-exporter
@@ -98,14 +100,9 @@ services:
       - demo
     restart: unless-stopped
 
-  alloy:
+  agent-collector:
     image: grafana/alloy:latest
     container_name: alloy
-    ports:
-      - '12345:12345'
-      - '4317:4317'
-      - '4318:4318'
-      - '9999:9999'
     volumes:
       - ./vispyr_agent/config.alloy:/etc/alloy/config.alloy
     command:
@@ -117,6 +114,92 @@ services:
     networks:
       - demo
     restart: unless-stopped
+
+  # Backend
+  init:
+    image: &tempoImage grafana/tempo
+    user: root
+    entrypoint:
+      - 'chown'
+      - '10001:10001'
+      - '/var/tempo'
+    volumes:
+      - ./vispyr_backend/tempo/data:/var/tempo
+
+  tempo:
+    image: *tempoImage
+    command: ['-config.file=/etc/tempo.yaml']
+    container_name: tempo
+    networks:
+      - demo
+    volumes:
+      - ./vispyr_backend/tempo/tempo.yaml:/etc/tempo.yaml
+      - ./vispyr_backend/tempo/data:/var/tempo
+    ports:
+      - '3200:3200'
+    depends_on:
+      - init
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    networks:
+      - demo
+    volumes:
+      - ./vispyr_backend/prometheus/prom-config.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.enable-remote-write-receiver
+
+  pyroscope:
+    image: grafana/pyroscope
+    container_name: pyroscope
+    volumes:
+      - ./vispyr_backend/pyroscope/pyro-config.yaml:/etc/pyro-config.yaml
+    command:
+      - -config.file=/etc/pyro-config.yaml
+    networks:
+      - demo
+    ports:
+      - 4040:4040
+
+  gateway-collector:
+    image: grafana/alloy
+    container_name: gateway-collector
+    networks:
+      - demo
+    volumes:
+      - ./vispyr_backend/alloy/gateway-config.alloy:/etc/alloy/config.alloy
+    ports:
+      - 4317:4317
+      - 4318:4318
+      - 9090:9090
+      - 9999:9999
+      - 12345:12345
+    command:
+      - run
+      - /etc/alloy/config.alloy
+      - --server.http.listen-addr=0.0.0.0:12345
+    depends_on:
+      - tempo
+      - pyroscope
+      - prometheus
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    networks:
+      - demo
+    volumes:
+      - ./vispyr_backend/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./vispyr_backend/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./vispyr_backend/grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+      - tempo
+      - pyroscope
 
 networks:
   demo:

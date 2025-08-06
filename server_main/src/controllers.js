@@ -11,12 +11,11 @@ const {
   primeMedian,
 } = require('./utilities');
 
-const EXTERNAL_SERVICE_URL =
-  process.env.EXTERNAL_SERVICE_URL || 'http://localhost:3002';
-const INTERNAL_SERVICE_URL =
-  process.env.INTERNAL_SERVICE_URL || 'http://localhost:3003';
+const SERVER_EXTERNAL_URL = process.env.SERVER_EXTERNAL_URL;
+const SERVER_INTERNAL_URL = process.env.SERVER_INTERNAL_URL;
 
-// Profile Testing Controllers
+console.log('RESULT:', SERVER_INTERNAL_URL, SERVER_EXTERNAL_URL);
+
 const efficientSort = async (req, res) => {
   try {
     const startTime = Date.now();
@@ -201,7 +200,7 @@ const multipleRetries = async (req, res) => {
 
       // Simulate an API call that might fail
       const response = await axios.get(
-        `${EXTERNAL_SERVICE_URL}/api/unreliable`,
+        `${SERVER_EXTERNAL_URL}/api/unreliable`,
         {
           timeout: 3000,
         }
@@ -241,7 +240,7 @@ const internalServiceCall = async (req, res) => {
     const startTime = Date.now();
 
     // Call internal service
-    const response = await axios.get(`${INTERNAL_SERVICE_URL}/api/process`, {
+    const response = await axios.get(`${SERVER_INTERNAL_URL}/api/process`, {
       timeout: 10000,
     });
 
@@ -264,7 +263,7 @@ const networkLatencyTest = async (req, res) => {
     const startTime = Date.now();
 
     // Call external service to simulate network latency
-    const response = await axios.get(`${EXTERNAL_SERVICE_URL}/api/delay`, {
+    const response = await axios.get(`${SERVER_EXTERNAL_URL}/api/delay`, {
       timeout: 10000,
     });
 

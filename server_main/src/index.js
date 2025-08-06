@@ -1,37 +1,46 @@
-const express = require('express');
-const cors = require('cors');
-const { Pool } = require('pg');
-const routes = require('./routes');
-const { errorHandler } = require('./middlewares');
+const express = require("express");
+const cors = require("cors");
+const { Pool } = require("pg");
+const routes = require("./routes");
+const { errorHandler } = require("./middlewares");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Database connection
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  user: process.env.DB_USER || "testuser",
+  host: process.env.DB_HOST || "localhost",
+  database: process.env.DB_NAME || "telemetry_test",
+  password: process.env.DB_PASSWORD || "testpass",
+  port: process.env.DB_PORT || 5432,
 });
 
-pool.query('SELECT NOW()', (err, res) => {
+// Test database connection
+pool.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error('Database connection error:', err);
+    console.error("Database connection error:", err);
   } else {
-    console.log('Database connected successfully');
+    console.log("Database connected successfully");
   }
 });
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Make pool available to routes
 app.locals.db = pool;
-app.use('/api', routes);
+
+// Routes
+app.use("/api", routes);
+
+// Error handling middleware
 app.use(errorHandler);
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "healthy", timestamp: new Date().toISOString() });
 });
 
 app.listen(PORT, () => {

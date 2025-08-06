@@ -11,11 +11,12 @@ const {
   primeMedian,
 } = require('./utilities');
 
-const SERVER_EXTERNAL_URL = process.env.SERVER_EXTERNAL_URL;
-const SERVER_INTERNAL_URL = process.env.SERVER_INTERNAL_URL;
+const EXTERNAL_SERVICE_URL =
+  process.env.EXTERNAL_SERVICE_URL || 'http://localhost:3002';
+const INTERNAL_SERVICE_URL =
+  process.env.INTERNAL_SERVICE_URL || 'http://localhost:3003';
 
-console.log('RESULT:', SERVER_INTERNAL_URL, SERVER_EXTERNAL_URL);
-
+// Profile Testing Controllers
 const efficientSort = async (req, res) => {
   try {
     const startTime = Date.now();
@@ -110,7 +111,7 @@ const stackBreak = async (req, res) => {
 const recursiveFunction = async (req, res) => {
   try {
     const startTime = Date.now();
-    const result = deepRecursion(10);
+    const result = deepRecursion(10); // 7 levels deep
     const endTime = Date.now();
 
     res.json({
@@ -143,10 +144,12 @@ const cpuIntensiveTask = async (req, res) => {
   }
 };
 
+// Trace Testing Controllers
 const queryDatabase = async (req, res) => {
   try {
     const startTime = Date.now();
 
+    // Create test table if it doesn't exist
     await req.app.locals.db.query(`
       CREATE TABLE IF NOT EXISTS test_data (
         id SERIAL PRIMARY KEY,
@@ -156,11 +159,13 @@ const queryDatabase = async (req, res) => {
       )
     `);
 
+    // Insert some test data
     await req.app.locals.db.query(`
       INSERT INTO test_data (name, value) 
       VALUES ('test_${Date.now()}', ${Math.floor(Math.random() * 1000)})
     `);
 
+    // Query the data
     const result = await req.app.locals.db.query(`
       SELECT * FROM test_data 
       ORDER BY created_at DESC 
@@ -184,7 +189,7 @@ const queryDatabase = async (req, res) => {
 
 const multipleRetries = async (req, res) => {
   const maxRetries = 5;
-  const retryDelay = 5000;
+  const retryDelay = 5000; // 5 seconds
   let attempt = 0;
   let lastError;
 
@@ -194,8 +199,9 @@ const multipleRetries = async (req, res) => {
     try {
       attempt++;
 
+      // Simulate an API call that might fail
       const response = await axios.get(
-        `${SERVER_EXTERNAL_URL}/api/unreliable`,
+        `${EXTERNAL_SERVICE_URL}/api/unreliable`,
         {
           timeout: 3000,
         }
@@ -234,7 +240,8 @@ const internalServiceCall = async (req, res) => {
   try {
     const startTime = Date.now();
 
-    const response = await axios.get(`${SERVER_INTERNAL_URL}/api/process`, {
+    // Call internal service
+    const response = await axios.get(`${INTERNAL_SERVICE_URL}/api/process`, {
       timeout: 10000,
     });
 
@@ -256,7 +263,8 @@ const networkLatencyTest = async (req, res) => {
   try {
     const startTime = Date.now();
 
-    const response = await axios.get(`${SERVER_EXTERNAL_URL}/api/delay`, {
+    // Call external service to simulate network latency
+    const response = await axios.get(`${EXTERNAL_SERVICE_URL}/api/delay`, {
       timeout: 10000,
     });
 
@@ -274,6 +282,7 @@ const networkLatencyTest = async (req, res) => {
   }
 };
 
+// Metrics Testing Controllers
 const simulateTraffic = async (req, res) => {
   try {
     const startTime = Date.now();

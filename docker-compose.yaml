@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: vispyr
       POSTGRES_DB: vispyr_demo
     ports:
-      - '5432:5432'
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -25,7 +25,7 @@ services:
       dockerfile: ../Dockerfile
     container_name: server-main
     ports:
-      - '3001:3001'
+      - 3001:3001
     environment:
       - DB_USER=user
       - DB_HOST=postgres
@@ -34,8 +34,8 @@ services:
       - DB_PORT=5432
       - SERVER_EXTERNAL_URL=http://server-external:3002
       - SERVER_INTERNAL_URL=http://server-internal:3003
-      - OTEL_SERVICE_NAME=main_server
-      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=main_server
+      - OTEL_SERVICE_NAME=server_main
+      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=server_main
     depends_on:
       postgres:
         condition: service_healthy
@@ -49,7 +49,7 @@ services:
       dockerfile: ../Dockerfile
     container_name: server-external
     ports:
-      - '3002:3002'
+      - 3002:3002
     networks:
       - demo
     restart: unless-stopped
@@ -60,10 +60,10 @@ services:
       dockerfile: ../Dockerfile
     container_name: server-internal
     ports:
-      - '3003:3003'
+      - 3003:3003
     environment:
-      - OTEL_SERVICE_NAME=internal_server
-      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=internal_server
+      - OTEL_SERVICE_NAME=server_internal
+      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=server_internal
     networks:
       - demo
     restart: unless-stopped
@@ -74,7 +74,7 @@ services:
       dockerfile: ../Dockerfile
     container_name: client
     ports:
-      - '5173:5173'
+      - 5173:5173
     depends_on:
       - server-main
     networks:
@@ -86,7 +86,7 @@ services:
     image: prom/node-exporter:latest
     container_name: node-exporter
     ports:
-      - '9100:9100'
+      - 9100:9100
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -104,7 +104,10 @@ services:
     image: grafana/alloy:latest
     container_name: alloy
     volumes:
-      - ./vispyr_agent/config.alloy:/etc/alloy/config.alloy
+      - ./server_main/vispyr_agent/config.alloy:/etc/alloy/config.alloy
+    ports:
+      - 4317:4317
+      - 9999:9999
     command:
       - run
       - /etc/alloy/config.alloy
@@ -136,7 +139,7 @@ services:
       - ./vispyr_backend/tempo/tempo.yaml:/etc/tempo.yaml
       - ./vispyr_backend/tempo/data:/var/tempo
     ports:
-      - '3200:3200'
+      - 3200:3200
     depends_on:
       - init
 
@@ -171,10 +174,7 @@ services:
     volumes:
       - ./vispyr_backend/alloy/gateway-config.alloy:/etc/alloy/config.alloy
     ports:
-      - 4317:4317
-      - 4318:4318
       - 9090:9090
-      - 9999:9999
       - 12345:12345
     command:
       - run

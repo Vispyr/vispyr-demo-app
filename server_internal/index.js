@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3003;
@@ -15,36 +15,36 @@ app.use((req, res, next) => {
 });
 
 // Health check
-app.get('/health', (req, res) => {
+app.get("/health", (req, res) => {
   res.json({
-    service: 'internal-service',
-    status: 'healthy',
+    service: "internal-service",
+    status: "healthy",
     timestamp: new Date().toISOString(),
   });
 });
 
 // Complex processing endpoint that creates longer traces
-app.get('/api/process', async (req, res) => {
+app.get("/api/process", async (req, res) => {
   const startTime = Date.now();
 
   try {
     // Simulate multi-step processing
-    console.log('Starting complex processing...');
+    console.log("Starting complex processing...");
 
     // Step 1: Data validation
-    await simulateStep('validation', 200, 500);
+    await simulateStep("validation", 200, 500);
 
     // Step 2: Data transformation
-    await simulateStep('transformation', 300, 800);
+    await simulateStep("transformation", 300, 800);
 
     // Step 3: Business logic processing
-    await simulateStep('business-logic', 500, 1200);
+    await simulateStep("business-logic", 500, 1200);
 
     // Step 4: Data persistence simulation
-    await simulateStep('persistence', 100, 400);
+    await simulateStep("persistence", 100, 400);
 
     // Step 5: Response preparation
-    await simulateStep('response-prep', 50, 200);
+    await simulateStep("response-prep", 50, 200);
 
     const endTime = Date.now();
     const totalDuration = endTime - startTime;
@@ -53,13 +53,13 @@ app.get('/api/process', async (req, res) => {
       success: true,
       duration: totalDuration,
       steps: [
-        { name: 'validation', duration: '200-500ms' },
-        { name: 'transformation', duration: '300-800ms' },
-        { name: 'business-logic', duration: '500-1200ms' },
-        { name: 'persistence', duration: '100-400ms' },
-        { name: 'response-prep', duration: '50-200ms' },
+        { name: "validation", duration: "200-500ms" },
+        { name: "transformation", duration: "300-800ms" },
+        { name: "business-logic", duration: "500-1200ms" },
+        { name: "persistence", duration: "100-400ms" },
+        { name: "response-prep", duration: "50-200ms" },
       ],
-      message: 'Complex processing completed successfully',
+      message: "Complex processing completed successfully",
       timestamp: new Date().toISOString(),
       processedData: {
         recordsProcessed: Math.floor(Math.random() * 1000) + 100,
@@ -91,17 +91,17 @@ const simulateStep = async (stepName, minDuration, maxDuration) => {
 };
 
 // Endpoint that simulates database operations
-app.get('/api/database-ops', async (req, res) => {
+app.get("/api/database-ops", async (req, res) => {
   const startTime = Date.now();
 
   try {
     // Simulate multiple database operations
-    await simulateStep('connect-db', 50, 150);
-    await simulateStep('query-users', 100, 300);
-    await simulateStep('query-orders', 150, 400);
-    await simulateStep('join-operations', 200, 500);
-    await simulateStep('aggregate-data', 100, 250);
-    await simulateStep('close-connection', 20, 80);
+    await simulateStep("connect-db", 50, 150);
+    await simulateStep("query-users", 100, 300);
+    await simulateStep("query-orders", 150, 400);
+    await simulateStep("join-operations", 200, 500);
+    await simulateStep("aggregate-data", 100, 250);
+    await simulateStep("close-connection", 20, 80);
 
     const endTime = Date.now();
 
@@ -109,14 +109,14 @@ app.get('/api/database-ops', async (req, res) => {
       success: true,
       duration: endTime - startTime,
       operations: [
-        'Database Connection',
-        'User Query',
-        'Order Query',
-        'Join Operations',
-        'Data Aggregation',
-        'Connection Cleanup',
+        "Database Connection",
+        "User Query",
+        "Order Query",
+        "Join Operations",
+        "Data Aggregation",
+        "Connection Cleanup",
       ],
-      message: 'Database operations completed successfully',
+      message: "Database operations completed successfully",
       timestamp: new Date().toISOString(),
       results: {
         usersFound: Math.floor(Math.random() * 100) + 10,
@@ -135,15 +135,15 @@ app.get('/api/database-ops', async (req, res) => {
 });
 
 // Endpoint that simulates external API calls
-app.get('/api/external-calls', async (req, res) => {
+app.get("/api/external-calls", async (req, res) => {
   const startTime = Date.now();
 
   try {
     // Simulate calling multiple external services
-    await simulateStep('auth-service', 100, 300);
-    await simulateStep('user-service', 200, 600);
-    await simulateStep('notification-service', 150, 400);
-    await simulateStep('analytics-service', 100, 250);
+    await simulateStep("auth-service", 100, 300);
+    await simulateStep("user-service", 200, 600);
+    await simulateStep("notification-service", 150, 400);
+    await simulateStep("analytics-service", 100, 250);
 
     const endTime = Date.now();
 
@@ -151,12 +151,12 @@ app.get('/api/external-calls', async (req, res) => {
       success: true,
       duration: endTime - startTime,
       externalCalls: [
-        { service: 'auth-service', status: 'success' },
-        { service: 'user-service', status: 'success' },
-        { service: 'notification-service', status: 'success' },
-        { service: 'analytics-service', status: 'success' },
+        { service: "auth-service", status: "success" },
+        { service: "user-service", status: "success" },
+        { service: "notification-service", status: "success" },
+        { service: "analytics-service", status: "success" },
       ],
-      message: 'External API calls completed successfully',
+      message: "External API calls completed successfully",
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -170,20 +170,20 @@ app.get('/api/external-calls', async (req, res) => {
 });
 
 // Endpoint that occasionally fails to test error handling
-app.get('/api/flaky', (req, res) => {
+app.get("/api/flaky", (req, res) => {
   const shouldFail = Math.random() < 0.3; // 30% chance of failure
 
   if (shouldFail) {
     return res.status(500).json({
       success: false,
-      error: 'Internal service temporarily unavailable',
+      error: "Internal service temporarily unavailable",
       timestamp: new Date().toISOString(),
     });
   }
 
   res.json({
     success: true,
-    message: 'Flaky service request succeeded',
+    message: "Flaky service request succeeded",
     timestamp: new Date().toISOString(),
     data: {
       randomValue: Math.floor(Math.random() * 1000),
@@ -194,10 +194,10 @@ app.get('/api/flaky', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error('Internal Service Error:', err);
+  console.error("Internal Service Error:", err);
   res.status(500).json({
     success: false,
-    error: 'Internal service error',
+    error: "Internal service error",
     timestamp: new Date().toISOString(),
   });
 });

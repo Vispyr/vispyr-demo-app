@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require("axios");
 const {
   quickSort,
   bubbleSort,
@@ -9,12 +9,12 @@ const {
   cpuBoundTask,
   simulateHighTraffic,
   primeMedian,
-} = require('./utilities');
+} = require("./utilities");
 
 const EXTERNAL_SERVICE_URL =
-  process.env.EXTERNAL_SERVICE_URL || 'http://localhost:3002';
+  process.env.EXTERNAL_SERVICE_URL || "http://localhost:3002";
 const INTERNAL_SERVICE_URL =
-  process.env.INTERNAL_SERVICE_URL || 'http://localhost:3003';
+  process.env.INTERNAL_SERVICE_URL || "http://localhost:3003";
 
 // Profile Testing Controllers
 const efficientSort = async (req, res) => {
@@ -25,10 +25,10 @@ const efficientSort = async (req, res) => {
 
     res.json({
       success: true,
-      algorithm: 'quicksort',
+      algorithm: "quicksort",
       duration: endTime - startTime,
       arraySize: result.length,
-      message: 'Efficient sort completed successfully',
+      message: "Efficient sort completed successfully",
     });
   } catch (error) {
     console.error(error);
@@ -44,10 +44,10 @@ const slowSort = async (req, res) => {
 
     res.json({
       success: true,
-      algorithm: 'bubblesort',
+      algorithm: "bubblesort",
       duration: endTime - startTime,
       arraySize: result.length,
-      message: 'Slow sort completed successfully',
+      message: "Slow sort completed successfully",
     });
   } catch (error) {
     console.error(error);
@@ -64,7 +64,7 @@ const longFunction = async (req, res) => {
     res.json({
       success: true,
       duration: endTime - startTime,
-      message: 'Long function completed successfully',
+      message: "Long function completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -82,7 +82,7 @@ const heapBreak = async (req, res) => {
       success: true,
       duration: endTime - startTime,
       memoryUsed: result.memoryUsed,
-      message: 'Heap stress test completed successfully',
+      message: "Heap stress test completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -100,7 +100,7 @@ const stackBreak = async (req, res) => {
       success: true,
       duration: endTime - startTime,
       depth: result.depth,
-      message: 'Stack stress test completed successfully',
+      message: "Stack stress test completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -118,7 +118,7 @@ const recursiveFunction = async (req, res) => {
       success: true,
       duration: endTime - startTime,
       result: result,
-      message: 'Recursive function completed successfully',
+      message: "Recursive function completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -136,7 +136,7 @@ const cpuIntensiveTask = async (req, res) => {
       success: true,
       duration: endTime - startTime,
       calculations: result,
-      message: 'CPU intensive task completed successfully',
+      message: "CPU intensive task completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -145,47 +145,47 @@ const cpuIntensiveTask = async (req, res) => {
 };
 
 // Trace Testing Controllers
-const queryDatabase = async (req, res) => {
-  try {
-    const startTime = Date.now();
-
-    // Create test table if it doesn't exist
-    await req.app.locals.db.query(`
-      CREATE TABLE IF NOT EXISTS test_data (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(100),
-        value INTEGER,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-
-    // Insert some test data
-    await req.app.locals.db.query(`
-      INSERT INTO test_data (name, value) 
-      VALUES ('test_${Date.now()}', ${Math.floor(Math.random() * 1000)})
-    `);
-
-    // Query the data
-    const result = await req.app.locals.db.query(`
-      SELECT * FROM test_data 
-      ORDER BY created_at DESC 
-      LIMIT 10
-    `);
-
-    const endTime = Date.now();
-
-    res.json({
-      success: true,
-      duration: endTime - startTime,
-      rowCount: result.rowCount,
-      data: result.rows,
-      message: 'Database query completed successfully',
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
-  }
-};
+// const queryDatabase = async (req, res) => {
+//   try {
+//     const startTime = Date.now();
+//
+//     // Create test table if it doesn't exist
+//     await req.app.locals.db.query(`
+//       CREATE TABLE IF NOT EXISTS test_data (
+//         id SERIAL PRIMARY KEY,
+//         name VARCHAR(100),
+//         value INTEGER,
+//         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+//       )
+//     `);
+//
+//     // Insert some test data
+//     await req.app.locals.db.query(`
+//       INSERT INTO test_data (name, value)
+//       VALUES ('test_${Date.now()}', ${Math.floor(Math.random() * 1000)})
+//     `);
+//
+//     // Query the data
+//     const result = await req.app.locals.db.query(`
+//       SELECT * FROM test_data
+//       ORDER BY created_at DESC
+//       LIMIT 10
+//     `);
+//
+//     const endTime = Date.now();
+//
+//     res.json({
+//       success: true,
+//       duration: endTime - startTime,
+//       rowCount: result.rowCount,
+//       data: result.rows,
+//       message: 'Database query completed successfully',
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 const multipleRetries = async (req, res) => {
   const maxRetries = 5;
@@ -204,7 +204,7 @@ const multipleRetries = async (req, res) => {
         `${EXTERNAL_SERVICE_URL}/api/unreliable`,
         {
           timeout: 3000,
-        }
+        },
       );
 
       const endTime = Date.now();
@@ -251,7 +251,7 @@ const internalServiceCall = async (req, res) => {
       success: true,
       duration: endTime - startTime,
       serviceResponse: response.data,
-      message: 'Internal service call completed successfully',
+      message: "Internal service call completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -274,7 +274,7 @@ const networkLatencyTest = async (req, res) => {
       success: true,
       duration: endTime - startTime,
       networkLatency: response.data.delay,
-      message: 'Network latency test completed successfully',
+      message: "Network latency test completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -294,7 +294,7 @@ const simulateTraffic = async (req, res) => {
       duration: endTime - startTime,
       requestsProcessed: results.requestsProcessed,
       avgResponseTime: results.avgResponseTime,
-      message: 'Traffic simulation completed successfully',
+      message: "Traffic simulation completed successfully",
     });
   } catch (error) {
     console.error(error.message);
@@ -313,7 +313,7 @@ const breakApp = () => {
       duration: endTime - startTime,
       requestsProcessed: results.requestsProcessed,
       avgResponseTime: results.avgResponseTime,
-      message: 'Somehow the App survived',
+      message: "Somehow the App survived",
     });
   } catch (error) {
     console.error(error.message);
@@ -328,7 +328,7 @@ module.exports = {
   heapBreak,
   stackBreak,
   recursiveFunction,
-  queryDatabase,
+  // queryDatabase,
   multipleRetries,
   cpuIntensiveTask,
   simulateTraffic,

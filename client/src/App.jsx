@@ -13,7 +13,7 @@ const App = () => {
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState({});
 
-  const API_BASE_URL = 'http://localhost:3001/api';
+  const API_BASE_URL = 'http://<insert ec2 instance IP>:3001/api';
 
   const handleApiCall = async (endpoint, buttonKey, buttonName) => {
     setLoading((prev) => ({ ...prev, [buttonKey]: true }));
@@ -54,11 +54,10 @@ const App = () => {
 
     return (
       <div
-        className={`mt-2 p-3 rounded-md flex items-center space-x-2 ${
-          result.success
+        className={`mt-2 p-3 rounded-md flex items-center space-x-2 ${result.success
             ? 'bg-green-100 border border-green-200'
             : 'bg-red-100 border border-red-200'
-        }`}
+          }`}
       >
         {result.success ? (
           <CheckCircle className="h-4 w-4 text-green-600" />
@@ -67,9 +66,8 @@ const App = () => {
         )}
         <div className="flex-1">
           <p
-            className={`text-sm font-medium ${
-              result.success ? 'text-green-800' : 'text-red-800'
-            }`}
+            className={`text-sm font-medium ${result.success ? 'text-green-800' : 'text-red-800'
+              }`}
           >
             {result.message}
           </p>
@@ -92,11 +90,10 @@ const App = () => {
     <button
       onClick={onClick}
       disabled={loading || disabled}
-      className={`w-full p-3 rounded-md border transition-colors flex items-center space-x-2 ${
-        loading || disabled
+      className={`w-full p-3 rounded-md border transition-colors flex items-center space-x-2 ${loading || disabled
           ? 'bg-gray-100 border-gray-300 text-gray-500 cursor-not-allowed'
           : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
-      }`}
+        }`}
     >
       {loading ? (
         <Clock className="h-4 w-4 animate-spin" />

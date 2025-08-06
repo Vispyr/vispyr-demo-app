@@ -60,13 +60,13 @@ otelcol.connector.spanmetrics "default" {
 // Exporters
 prometheus.remote_write "gateway_collector" {
   endpoint {
-    url = "http://10.1.0.65:9090/api/v1/metrics/write"
+    url = "http://gateway-collector:9090/api/v1/metrics/write"
   }
 }
 
 otelcol.exporter.otlp "gateway_collector" {
   client {
-    endpoint = "10.1.0.65:4317"
+    endpoint = "gateway-collector:4317"
     tls {
       insecure = true
       insecure_skip_verify = true
@@ -76,7 +76,7 @@ otelcol.exporter.otlp "gateway_collector" {
 
 pyroscope.write "gateway_collector" {
   endpoint {
-    url = "http://10.1.0.65:9999"
+    url = "http://gateway-collector:9999"
   }
 }
 

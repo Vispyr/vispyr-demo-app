@@ -42,6 +42,7 @@ router.get('/complex-operation', async (req, res) => {
   try {
     const startTime = Date.now();
 
+    // Simulate multiple internal operations
     await new Promise((resolve) => setTimeout(resolve, 100));
     const dbResult = await req.app.locals.db.query(
       'SELECT NOW() as current_time'

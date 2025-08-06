@@ -1,9 +1,9 @@
-const Pyroscope = require('@pyroscope/nodejs');
+const Pyroscope = require("@pyroscope/nodejs");
 
 Pyroscope.init({
-  serverAddress: 'http://agent-collector:9999',
-  appName: 'Telemetry-Test-App',
+  serverAddress: "http://localhost:9999",
+  appName: "Telemetry-Test-App",
 });
 
-console.log('Starting Pyroscope Profiler');
+console.log("Starting Pyroscope Profiler");
 Pyroscope.start();

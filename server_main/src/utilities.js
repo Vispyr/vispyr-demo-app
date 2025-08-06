@@ -1,9 +1,11 @@
 const axios = require('axios');
 
+// Generate test array for sorting
 const generateTestArray = (size = 100) => {
   return Array.from({ length: size }, () => Math.floor(Math.random() * 100000));
 };
 
+// Efficient sorting - QuickSort
 const quickSort = (arr = null) => {
   if (arr === null) {
     arr = generateTestArray();
@@ -30,6 +32,7 @@ const quickSort = (arr = null) => {
   return [...quickSort(left), pivot, ...quickSort(right)];
 };
 
+// Inefficient sorting - Bubble Sort
 const bubbleSort = (arr = null) => {
   if (arr === null) {
     arr = generateTestArray();
@@ -41,6 +44,7 @@ const bubbleSort = (arr = null) => {
   for (let i = 0; i < n - 1; i++) {
     for (let j = 0; j < n - i - 1; j++) {
       if (sortedArr[j] > sortedArr[j + 1]) {
+        // Swap elements
         const temp = sortedArr[j];
         sortedArr[j] = sortedArr[j + 1];
         sortedArr[j + 1] = temp;
@@ -51,9 +55,10 @@ const bubbleSort = (arr = null) => {
   return sortedArr;
 };
 
+// Long running task (1 minute)
 const longRunningTask = async () => {
   const startTime = Date.now();
-  const targetDuration = 60000;
+  const targetDuration = 60000; // 1 minute
 
   return new Promise((resolve) => {
     const performWork = () => {
@@ -66,11 +71,13 @@ const longRunningTask = async () => {
           iterations: Math.floor((currentTime - startTime) / 100),
         });
       } else {
+        // Perform some CPU work to keep the process busy
         let sum = 0;
         for (let i = 0; i < 100000; i++) {
           sum += Math.sqrt(i);
         }
 
+        // Schedule next iteration
         setTimeout(performWork, 100);
       }
     };
@@ -79,16 +86,19 @@ const longRunningTask = async () => {
   });
 };
 
+// Heap stress test
 const createHeapStress = () => {
   const arrays = [];
-  const targetSize = 50;
+  const targetSize = 50; // Create 50 large arrays
 
   try {
     for (let i = 0; i < targetSize; i++) {
+      // Create arrays of 1M elements each
       const largeArray = new Array(1000000).fill(0).map(() => Math.random());
       arrays.push(largeArray);
     }
 
+    // Perform some operations on the arrays
     let sum = 0;
     arrays.forEach((arr) => {
       sum += arr.reduce((a, b) => a + b, 0);
@@ -108,8 +118,9 @@ const createHeapStress = () => {
   }
 };
 
+// Stack stress test (controlled depth)
 const createStackOverflow = () => {
-  const maxDepth = 1000000;
+  const maxDepth = 1000000; // Reasonable depth that won't crash
   let currentDepth = 0;
 
   const recursiveFunction = (depth) => {
@@ -119,6 +130,7 @@ const createStackOverflow = () => {
       return depth;
     }
 
+    // Perform some computation at each level
     const result = Math.sqrt(depth) + Math.sin(depth);
 
     return recursiveFunction(depth + 1) + result;
@@ -140,21 +152,26 @@ const createStackOverflow = () => {
   }
 };
 
+// Deep recursion (5-10 levels)
 const deepRecursion = (levels, current = 0) => {
   if (current >= levels) {
     return current;
   }
 
+  // Perform some computation at each level
   const computation = Math.pow(current, 2) + Math.sqrt(current + 1);
 
   return computation + deepRecursion(levels, current + 1);
 };
 
+// CPU-intensive task
 const cpuBoundTask = () => {
   const startTime = Date.now();
   let calculations = 0;
 
+  // Run for about 10 seconds or until we've done enough calculations
   while (Date.now() - startTime < 10000 && calculations < 10000000) {
+    // Perform heavy mathematical operations
     const n = Math.random() * 1000;
     Math.sqrt(n);
     Math.sin(n);
@@ -167,6 +184,7 @@ const cpuBoundTask = () => {
   return calculations;
 };
 
+// Simulate high traffic
 const simulateHighTraffic = async () => {
   const requests = [];
   const requestCount = 10000;
@@ -174,6 +192,7 @@ const simulateHighTraffic = async () => {
 
   const startTime = Date.now();
 
+  // Create 10000 concurrent requests
   for (let i = 0; i < requestCount; i++) {
     const requestPromise = axios
       .get(`${baseUrl}/health`, {
@@ -219,11 +238,13 @@ const simulateHighTraffic = async () => {
   }
 };
 
+// Utility function to simulate processing time
 const simulateProcessingTime = (min = 100, max = 1000) => {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   return new Promise((resolve) => setTimeout(resolve, delay));
 };
 
+// Generate mock data
 const generateMockData = (count = 10) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
@@ -233,6 +254,7 @@ const generateMockData = (count = 10) => {
   }));
 };
 
+// App-Breaking Function
 const primeFilter = (num) => {
   const limit = Math.floor(Math.sqrt(num)) + 1;
   let isPrime = Array(limit).fill(true);

@@ -1,27 +1,25 @@
+// NODE SDK APPROACH
+
 require('dotenv').config();
-const opentelemetry = require('@opentelemetry/sdk-node');
+const opentelemetry = require("@opentelemetry/sdk-node");
 const {
   getNodeAutoInstrumentations,
-} = require('@opentelemetry/auto-instrumentations-node');
+} = require("@opentelemetry/auto-instrumentations-node");
 const {
   OTLPTraceExporter,
-} = require('@opentelemetry/exporter-trace-otlp-grpc');
+} = require("@opentelemetry/exporter-trace-otlp-grpc");
 const {
   OTLPMetricExporter,
-} = require('@opentelemetry/exporter-metrics-otlp-grpc');
-const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
+} = require("@opentelemetry/exporter-metrics-otlp-grpc");
+const { PeriodicExportingMetricReader } = require("@opentelemetry/sdk-metrics");
 
 const sdk = new opentelemetry.NodeSDK({
-  traceExporter: new OTLPTraceExporter({
-    url: 'http://agent-collector:4317',
-  }),
+  traceExporter: new OTLPTraceExporter(),
   metricReader: new PeriodicExportingMetricReader({
-    exporter: new OTLPMetricExporter({
-      url: 'http://agent-collector:4317',
-    }),
+    exporter: new OTLPMetricExporter(),
   }),
   instrumentations: [getNodeAutoInstrumentations()],
 });
 
-console.log('Starting OTLP Instrumentation');
+console.log("Starting OTLP Instrumentation");
 sdk.start();

@@ -1,3 +1,5 @@
+// Metrics & Traces
+
 require('dotenv').config();
 const opentelemetry = require('@opentelemetry/sdk-node');
 const {
@@ -13,11 +15,11 @@ const { PeriodicExportingMetricReader } = require('@opentelemetry/sdk-metrics');
 
 const sdk = new opentelemetry.NodeSDK({
   traceExporter: new OTLPTraceExporter({
-    url: 'http://host.docker.internal:4317',
+    url: 'http://agent-collector:4317',
   }),
   metricReader: new PeriodicExportingMetricReader({
     exporter: new OTLPMetricExporter({
-      url: 'http://host.docker.internal:4317',
+      url: 'http://agent-collector:4317',
     }),
   }),
   instrumentations: [getNodeAutoInstrumentations()],
@@ -25,3 +27,15 @@ const sdk = new opentelemetry.NodeSDK({
 
 console.log('Starting OTLP Instrumentation');
 sdk.start();
+
+// Profiles
+
+const Pyroscope = require('@pyroscope/nodejs');
+
+Pyroscope.init({
+  serverAddress: 'http://agent-collector:9999',
+  appName: process.env.OTEL_SERVICE_NAME,
+});
+
+console.log('Starting Pyroscope Profiler');
+Pyroscope.start();

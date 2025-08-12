@@ -148,6 +148,8 @@ services:
     container_name: prometheus
     networks:
       - demo
+    volumes:
+      - ./vispyr_backend/prometheus:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --web.enable-remote-write-receiver

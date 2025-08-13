@@ -4,7 +4,7 @@
   "description": "Main API server for telemetry testing",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "bash ./vispyr_agent/deployAgent.sh && node --require ./vispyr_agent/instrumentation.js --env-file=/.env src/index.js",
     "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

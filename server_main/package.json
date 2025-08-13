@@ -4,8 +4,8 @@
   "description": "Main API server for telemetry testing",
   "main": "index.js",
   "scripts": {
-    "start": "node --require ./profileService.js --require ./instrumentation.js src/index.js",
-    "dev": "nodemon --require ./profileService.js --require ./instrumentation.js src/index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

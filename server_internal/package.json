@@ -4,7 +4,7 @@
   "description": "Internal service for telemetry testing",
   "main": "index.js",
   "scripts": {
-    "start": "bash ./vispyr_agent/deployAgent.sh && node --env-file=./.env --require ./vispyr_agent/instrumentation.js src/index.js",
+    "start": "bash ./vispyr_agent/deployAgent.sh && node --env-file=./.env --require ./vispyr_agent/instrumentation.js index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

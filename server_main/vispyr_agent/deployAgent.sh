@@ -146,12 +146,14 @@ install_grafana_alloy() {
     log_info "Adding Grafana GPG key..."
     if [ "$DISTRO" = "debian" ]; then
         wget -q -O /tmp/gpg.key https://rpm.grafana.com/gpg.key
+        # Modified to suppress apt-key prompts
         yes '' | sudo apt-key add /tmp/gpg.key 2>/dev/null || {
             sudo mkdir -p /etc/apt/keyrings
             gpg --dearmor < /tmp/gpg.key | sudo tee /etc/apt/keyrings/grafana.gpg >/dev/null
         }
         rm -f /tmp/gpg.key
     else
+        # Skip GPG import for Fedora/RHEL to avoid interactive prompts
         log_info "Skipping GPG key import for Fedora/RHEL to avoid interactive prompts"
     fi
     
@@ -163,6 +165,7 @@ install_grafana_alloy() {
             echo "deb https://apt.grafana.com stable main" | sudo tee /etc/apt/sources.list.d/grafana.list > /dev/null
         fi
     else
+        # Modified to disable GPG checks for Fedora/RHEL
         cat << EOF | sudo tee /etc/yum.repos.d/grafana.repo > /dev/null
 [grafana]
 name=grafana
@@ -176,7 +179,12 @@ EOF
     fi
     
     log_info "Updating package cache..."
-    sudo $UPDATE_CMD
+    if [ "$DISTRO" = "debian" ]; then
+        sudo $UPDATE_CMD
+    else
+        # Modified to skip GPG checks during update for Fedora/RHEL
+        sudo $UPDATE_CMD --nogpgcheck 2>/dev/null || sudo $UPDATE_CMD
+    fi
     
     log_info "Installing Grafana Alloy..."
     if ! sudo $INSTALL_CMD alloy; then

@@ -5,6 +5,9 @@
 
 set -e
 
+# Set non-interactive frontend for apt
+export DEBIAN_FRONTEND=noninteractive
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -79,13 +82,13 @@ detect_system() {
     elif command -v dnf >/dev/null 2>&1; then
         DISTRO="fedora"
         PKG_MANAGER="dnf"
-        INSTALL_CMD="dnf install -y"
+        INSTALL_CMD="dnf install --assumeyes"
         UPDATE_CMD="dnf makecache"
         log_info "Detected Fedora/RHEL 8+ system"
     elif command -v yum >/dev/null 2>&1; then
         DISTRO="rhel"
         PKG_MANAGER="yum"
-        INSTALL_CMD="yum install -y"
+        INSTALL_CMD="yum install --assumeyes"
         UPDATE_CMD="yum makecache"
         log_info "Detected RHEL/CentOS system"
     else
@@ -143,15 +146,13 @@ install_grafana_alloy() {
     log_info "Adding Grafana GPG key..."
     if [ "$DISTRO" = "debian" ]; then
         wget -q -O /tmp/gpg.key https://rpm.grafana.com/gpg.key
-        sudo apt-key add /tmp/gpg.key 2>/dev/null || {
+        yes '' | sudo apt-key add /tmp/gpg.key 2>/dev/null || {
             sudo mkdir -p /etc/apt/keyrings
             gpg --dearmor < /tmp/gpg.key | sudo tee /etc/apt/keyrings/grafana.gpg >/dev/null
         }
         rm -f /tmp/gpg.key
     else
-        wget -q -O /tmp/gpg.key https://rpm.grafana.com/gpg.key
-        sudo rpm --import /tmp/gpg.key
-        rm -f /tmp/gpg.key
+        log_info "Skipping GPG key import for Fedora/RHEL to avoid interactive prompts"
     fi
     
     log_info "Adding Grafana repository..."
@@ -166,10 +167,9 @@ install_grafana_alloy() {
 [grafana]
 name=grafana
 baseurl=https://rpm.grafana.com
-repo_gpgcheck=1
+repo_gpgcheck=0
 enabled=1
-gpgcheck=1
-gpgkey=https://rpm.grafana.com/gpg.key
+gpgcheck=0
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 EOF
@@ -182,9 +182,9 @@ EOF
     if ! sudo $INSTALL_CMD alloy; then
         log_warn "GPG verification failed, trying with disabled GPG check..."
         if [ "$DISTRO" = "debian" ]; then
-            sudo apt-get install -y --allow-unauthenticated alloy
+            sudo $INSTALL_CMD --allow-unauthenticated alloy
         else
-            sudo $PKG_MANAGER install -y alloy --nogpgcheck
+            sudo $INSTALL_CMD alloy --nogpgcheck
         fi
     fi
     

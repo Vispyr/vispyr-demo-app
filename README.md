@@ -29,7 +29,11 @@ Access the app through port 5173 on your browser. It will provide you with 3 col
   <img src="assets/demo2.gif" alt="Collector Overview" width="600">
 </div>
 
-To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password. The browser will pop-up a security warning, and a page will be opened where you can change your credentials. You can do so, or skip it. Next Vispyr's dashboard will open and show all telemetry data being sent by the Demo App.
+To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password and a page will be opened where you can change your credentials. You can do so, or skip it. Next, the Vispyr's dashboard will open and show all telemetry data being sent by the Demo App.
+
+<div align="center">
+  <img src="assets/demo3.gif" alt="Collector Overview" width="600">
+</div>
 
 # Demonstration
 

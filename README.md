@@ -41,6 +41,12 @@ Vispyr's dashboard allow you to zoom into the section of time you choose to focu
   <img src="assets/demo3.gif" alt="Collector Overview" width="600">
 </div>
 
+You can select a specific trace to understand why it took too long. The waterfall diagram opens with the details of the selected trace:
+
+<div align="center">
+  <img src="assets/demo4.gif" alt="Collector Overview" width="600">
+</div>
+
 # Learn more
 
 Please refer to the [CLI documentation](https://github.com/Vispyr/vispyr-cli "Go to CLI page") for deployment instructions.

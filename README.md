@@ -23,11 +23,9 @@ docker compose up -d
 ```
 This will spin up the Demo App locally, along with [Vispyr's backend](https://github.com/Vispyr/vispyr-backend "Go to Vispyr backend") and the whole observability pipeline.
 
-Access the app through port 5173 on your browser:
+Access the app through port 5173 on your browser. It will provide you with 3 columns for testing scenarios: for profiles, traces and metrics. These are meant to serve Vispyr's dashboard with situations where each of these telemetry signals is more effective.
 
-<div align="center">
-  <img src="assets/demo_app.png" alt="Collector Overview" width="600">
-</div>
+To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password. The browser will pop-up a security warning, and a page will be opened where you can change your credentials. You can do so, or skip it. Next Vispyr's dashboard will open and show all telemetry data being sent by the Demo App.
 
 # Learn more
 

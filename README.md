@@ -6,7 +6,7 @@
 
 # Vispyr Demo App
 
-This Demo App was built to provide a quick and easy way for anyone to access Vispyr. When you run the app, you're able to simulate many scenarios that an actual application may inccur in production, and check how those can be observed through Vispyr.
+This Demo App was built to provide a quick and easy way for anyone to access Vispyr. When you run the app, you're able to simulate many scenarios that an actual application may encounter in production, and check how those can be observed through Vispyr.
 
 # How to use
 
@@ -23,13 +23,13 @@ docker compose up -d
 ```
 This will spin up the Demo App locally, along with [Vispyr's backend](https://github.com/Vispyr/vispyr-backend "Go to Vispyr backend") and the whole observability pipeline.
 
-Access the app through port 5173 on your browser. It will provide you with 3 columns for testing scenarios: profiles, traces and metrics. These are meant to serve Vispyr's dashboard with situations where each of these telemetry signals is more effective.
+Access the app through port `5173` on your browser. It will provide you with 3 columns for testing scenarios: profiles, traces, and metrics. These are meant to serve Vispyr's dashboard with situations where each of these telemetry signals is more effective.
 
-To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password and a page will be opened where you can change your credentials. You can do so, or skip it. Next, the Vispyr's dashboard will open and show all telemetry data being sent by the Demo App.
+To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password, and a page will be opened where you can change your credentials. You can do so, or skip it. Next, Vispyr's dashboard will open and show visual representations of the telemetry data being sent by the Demo App.
 
 # Demonstration
 
-The Demo App contains buttons that you click to run the scenario to test. You can even break the application, which will stop all telemetry data coming from the app itself, but not the system metrics.
+The Demo App contains buttons that you click to run scenarios to test. You can even break the application, which will stop all telemetry data coming from the app itself, but not the system metrics.
 
 <div align="center">
   <img src="assets/demo2.gif" alt="Collector Overview" width="600">

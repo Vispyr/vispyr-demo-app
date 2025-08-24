@@ -119,7 +119,7 @@ services:
     restart: unless-stopped
 
   # Backend
-  init:
+  init-tempo:
     image: &tempoImage grafana/tempo
     user: root
     entrypoint:
@@ -141,15 +141,13 @@ services:
     ports:
       - 3200:3200
     depends_on:
-      - init
+      - init-tempo
 
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     networks:
       - demo
-    volumes:
-      - ./vispyr_backend/prometheus:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --web.enable-remote-write-receiver

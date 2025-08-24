@@ -102,7 +102,7 @@ services:
 
   agent-collector:
     image: grafana/alloy:latest
-    container_name: alloy
+    container_name: agent-collector
     volumes:
       - ./server_main/vispyr_agent/config.alloy:/etc/alloy/config.alloy
     ports:

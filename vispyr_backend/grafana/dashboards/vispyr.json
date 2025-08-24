@@ -692,7 +692,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "always",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -705,7 +705,7 @@
           "displayName": "Requests",
           "links": [
             {
-              "oneClick": true,
+              "oneClick": false,
               "title": "Trace Waterfall",
               "url": "?var-traceId=${__data.fields[\"traceID\"]}"
             }

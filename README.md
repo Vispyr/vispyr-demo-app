@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://vispyr.com">
-    <img src="./assets/vispyr-banner.png" alt="Vispyr Banner" width="400">
+    <img src="https://raw.githubusercontent.com/vispyr/.github/main/profile/assets/vispyr-banner.png" alt="Vispyr Banner" width="400">
   </a>
 </div>
 
@@ -32,19 +32,19 @@ To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll b
 The Demo App contains buttons that you click to run scenarios to test. You can even break the application, which will stop all telemetry data coming from the app itself, but not the system metrics.
 
 <div align="center">
-  <img src="assets/demo2.gif" alt="Collector Overview" width="600">
+  <img src="https://raw.githubusercontent.com/vispyr/.github/main/profile/assets/demo2.gif" alt="Collector Overview" width="600">
 </div>
 
 Vispyr's dashboard allow you to zoom into the section of time you choose to focus on. If the system has a memory spike, for example, you can visually select that slice of the timeline:
 
 <div align="center">
-  <img src="assets/demo3.gif" alt="Collector Overview" width="600">
+  <img src="https://raw.githubusercontent.com/vispyr/.github/main/profile/assets/demo3.gif" alt="Collector Overview" width="600">
 </div>
 
 You can select a specific trace to understand why it took too long. The waterfall diagram opens with the details of the selected trace:
 
 <div align="center">
-  <img src="assets/demo4.gif" alt="Collector Overview" width="600">
+  <img src="https://raw.githubusercontent.com/vispyr/.github/main/profile/assets/grafana-dashboard.gif" alt="Collector Overview" width="600">
 </div>
 
 # Learn more

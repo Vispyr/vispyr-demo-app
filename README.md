@@ -23,9 +23,9 @@ docker compose up -d
 ```
 This will spin up the Demo App locally, along with [Vispyr's backend](https://github.com/Vispyr/vispyr-backend "Go to Vispyr backend") and the whole observability pipeline.
 
-Access the app through port `5173` on your browser. It will provide you with 3 columns for testing scenarios: profiles, traces, and metrics. These are meant to serve Vispyr's dashboard with situations where each of these telemetry signals is more effective.
+Access the app by navigating to `localhost:5173` in your browser. It will provide you with 3 columns for testing scenarios: profiles, traces, and metrics. These are meant to serve Vispyr's dashboard with situations where each of these telemetry signals is more effective.
 
-To access the Vispyr dashboard, go to `localhost:3000` on your browser. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password, and a page will be opened where you can change your credentials. You can do so, or skip it. Next, Vispyr's dashboard will open and show visual representations of the telemetry data being sent by the Demo App.
+To access the Vispyr dashboard, go to `localhost:3000`. You'll be asked for credentials before accessing the dashboard. Use `admin` for both username and password, and a page will be opened where you can change your credentials. You can do so, or skip it. Next, Vispyr's dashboard will open and show visual representations of the telemetry data being sent by the Demo App.
 
 # Demonstration
 
@@ -35,7 +35,7 @@ The Demo App contains buttons that you click to run scenarios to test. You can e
   <img src="https://raw.githubusercontent.com/vispyr/.github/main/profile/assets/demo2.gif" alt="Collector Overview" width="600">
 </div>
 
-Vispyr's dashboard allow you to zoom into the section of time you choose to focus on. If the system has a memory spike, for example, you can visually select that slice of the timeline:
+Vispyr's dashboard allows you to zoom into the section of time you choose to focus on. If the system has a memory spike, for example, you can visually select that slice of the timeline:
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/vispyr/.github/main/profile/assets/demo3.gif" alt="Collector Overview" width="600">
